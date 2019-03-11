@@ -20,25 +20,33 @@ class Perceptron(object):
 
     def fit(self, X, y):
         self.w = np.zeros(X.shape[1] + 1)
-        correct_count = 0
-        n_iter_ = 0
+        # expand the one column to input data
+        expand_X = np.ones((X.shape[0],X.shape[1]+1))
+        expand_X[:,:-1] = X
+        for _ in range(self.max_iter_):
+            randomInt = np.random.randint(X.shape[0])
+            if y[randomInt]*self.w.dot(expand_X[randomInt,:])<=0 :
+                self.w += self.eta_*expand_X[randomInt,:]*y[randomInt]
 
-        while n_iter_ < self.max_iter_:
-            index = random.randint(0, y.shape[0] - 1)
-            xx_ = np.hstack([X[index], 1])
-            yy_ = 2 * y[index] - 1
-            wx = np.dot(self.w, xx_)
 
-            if wx * yy_ > 0:
-                correct_count += 1
-                if correct_count > self.max_iter_:
-                    break
-                continue
 
-            self.w += self.eta_ * yy_ * xx_
-            n_iter_ += 1
-            if self.verbose:
-                print(n_iter_)
+        # while n_iter_ < self.max_iter_:
+        #     index = random.randint(0, y.shape[0] - 1)
+        #     xx_ = np.hstack([X[index], 1])
+        #     # yy_ = 2 * y[index] - 1
+        #     yy_ = y[index]
+        #     wx = np.dot(self.w, xx_)
+
+        #     if wx * yy_ > 0:
+        #         correct_count += 1
+        #         if correct_count > self.max_iter_:
+        #             break
+        #         continue
+
+        #     self.w += self.eta_ * yy_ * xx_
+        #     n_iter_ += 1
+        #     if self.verbose:
+        #         print(n_iter_)
 
     def predict(self, X):
         # for b
@@ -57,3 +65,5 @@ if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument("-p", "--path", required=False, help="path to input data file")
     args = vars(ap.parse_args())
+    # added to test the function of args
+    print(args)

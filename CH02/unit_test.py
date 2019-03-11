@@ -10,8 +10,9 @@ import numpy as np
 import argparse
 import logging
 import unittest
-
-
+import os
+# make sure current path is the the path of the directory in which this file located so that the the data could be loaded sucesefully using relative path.
+os.chdir(os.path.dirname(__file__))
 class TestPerceptron(unittest.TestCase):
 
     def test_e21(self):
@@ -68,7 +69,7 @@ class TestPerceptron(unittest.TestCase):
         # loaddata
         data_raw = np.loadtxt("Input/logic_data_2.txt")
         X = data_raw[:, :3]
-        clf = Perceptron(max_iter=100, eta=0.0001, verbose=False)
+        clf = Perceptron(max_iter=10, eta=0.0001, verbose=False)
         # test and
         y = data_raw[:, 3]
         clf.fit(X, y)
