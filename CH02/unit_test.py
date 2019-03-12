@@ -5,7 +5,7 @@
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from sklearn.datasets import load_digits
-from perceptron import *
+from perceptron import Perceptron
 import numpy as np
 import argparse
 import logging
@@ -13,6 +13,8 @@ import unittest
 import os
 # make sure current path is the the path of the directory in which this file located so that the the data could be loaded sucesefully using relative path.
 os.chdir(os.path.dirname(__file__))
+
+
 class TestPerceptron(unittest.TestCase):
 
     def test_e21(self):
@@ -96,7 +98,8 @@ class TestPerceptron(unittest.TestCase):
         # 0和1比较容易分辨吧
         y[y == 0] = -1
 
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=2018)
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, test_size=0.33, random_state=2018)
 
         clf = Perceptron()
         clf.fit(X_train, y_train)
@@ -106,11 +109,13 @@ class TestPerceptron(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    logging.basicConfig(level=logging.INFO,
+                        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     logger = logging.getLogger(__name__)
 
     ap = argparse.ArgumentParser()
-    ap.add_argument("-p", "--path", required=False, help="path to input data file")
+    ap.add_argument("-p", "--path", required=False,
+                    help="path to input data file")
     args = vars(ap.parse_args())
 
     unittest.main()

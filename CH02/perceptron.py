@@ -21,14 +21,12 @@ class Perceptron(object):
     def fit(self, X, y):
         self.w = np.zeros(X.shape[1] + 1)
         # expand the one column to input data
-        expand_X = np.ones((X.shape[0],X.shape[1]+1))
-        expand_X[:,:-1] = X
+        expand_X = np.ones((X.shape[0], X.shape[1]+1))
+        expand_X[:, :-1] = X
         for _ in range(self.max_iter_):
             randomInt = np.random.randint(X.shape[0])
-            if y[randomInt]*self.w.dot(expand_X[randomInt,:])<=0 :
-                self.w += self.eta_*expand_X[randomInt,:]*y[randomInt]
-
-
+            if y[randomInt]*self.w.dot(expand_X[randomInt, :]) <= 0:
+                self.w += self.eta_*expand_X[randomInt, :]*y[randomInt]
 
         # while n_iter_ < self.max_iter_:
         #     index = random.randint(0, y.shape[0] - 1)
@@ -59,11 +57,13 @@ class Perceptron(object):
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    logging.basicConfig(
+        level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     logger = logging.getLogger(__name__)
 
     ap = argparse.ArgumentParser()
-    ap.add_argument("-p", "--path", required=False, help="path to input data file")
+    ap.add_argument("-p", "--path", required=False,
+                    help="path to input data file")
     args = vars(ap.parse_args())
     # added to test the function of args
     print(args)
